@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>About Us – Sweet Cake Shop</title>
+    <meta name="description" content="Learn the story behind Sweet Cake Shop — our passion for baking, our team, and why every cake we make is crafted with love."/>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        *{
+            margin:0;
+            padding:0;
+            box-sizing:border-box;
+            font-family:'Poppins', sans-serif;
+        }
+
+        body{
+            background: linear-gradient(to right, #fff0f5, #ffe4e1);
+            color:#333;
+        }
+
+        /* ── Header ── */
+        header{
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding:18px 50px;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+            border-bottom: 1px solid rgba(255, 105, 180, 0.2);
+        }
+
+        header h1{
+            font-size:30px;
+            font-weight:700;
+            color: #8b4513;
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+        }
+
+        nav a{
+            color: #555;
+            text-decoration:none;
+            font-size:17px;
+            font-weight: 600;
+            padding: 8px 20px;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
+        }
+
+        /* ── Hero Banner ── */
+        .about-hero{
+            height:55vh;
+            background: url('images/cakephoto.jpeg') center/cover no-repeat;
+            display:flex;
+            justify-content:center;
+            align-items:center;
+            text-align:center;
+            color:white;
+            position:relative;
+        }
+
+        .about-hero::before{
+            content:'';
+            position:absolute;
+            inset:0;
+            background: linear-gradient(to bottom, rgba(139,69,19,0.65), rgba(0,0,0,0.55));
+        }
+
+        .about-hero-content{
+            position:relative;
+            z-index:1;
+            animation: fadeUp 0.9s ease both;
+        }
+
+        .about-hero-content h2{
+            font-size:52px;
+            font-weight:700;
+            letter-spacing:1px;
+            margin-bottom:14px;
+        }
+
+        .about-hero-content p{
+            font-size:20px;
+            font-weight:300;
+            max-width:600px;
+            margin:0 auto;
+        }
+
+        @keyframes fadeUp{
+            from{ opacity:0; transform:translateY(30px); }
+            to  { opacity:1; transform:translateY(0);    }
+        }
+
+        /* ── Section Wrapper ── */
+        .section{
+            padding:70px 60px;
+            max-width:1100px;
+            margin:0 auto;
+        }
+
+        .section-title{
+            font-size:38px;
+            color:#8b4513;
+            text-align:center;
+            margin-bottom:50px;
+            position:relative;
+        }
+
+        .section-title::after{
+            content:'';
+            display:block;
+            width:70px;
+            height:4px;
+            background: linear-gradient(to right, #ff69b4, #d2691e);
+            border-radius:4px;
+            margin:12px auto 0;
+        }
+
+        /* ── Our Story ── */
+        .story-grid{
+            display:grid;
+            grid-template-columns:1fr 1fr;
+            gap:50px;
+            align-items:center;
+        }
+
+        .story-grid img{
+            width:100%;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.15);
+            object-fit:cover;
+            height:370px;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .story-grid img:hover{
+            transform: scale(1.03);
+            box-shadow:0 14px 40px rgba(0,0,0,0.22);
+        }
+
+        .story-text h3{
+            font-size:28px;
+            color:#d2691e;
+            margin-bottom:16px;
+        }
+
+        .story-text p{
+            color:#555;
+            font-size:16px;
+            line-height:1.9;
+            margin-bottom:14px;
+        }
+
+        /* ── Values Cards ── */
+        .values-bg{
+            background: linear-gradient(135deg, #fff0f5, #ffdde8);
+            padding:70px 60px;
+        }
+
+        .values-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));
+            gap:30px;
+            max-width:1100px;
+            margin:0 auto;
+        }
+
+        .value-card{
+            background:white;
+            border-radius:20px;
+            padding:35px 25px;
+            text-align:center;
+            box-shadow:0 6px 20px rgba(0,0,0,0.1);
+            transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+
+        .value-card:hover{
+            transform:translateY(-10px);
+            box-shadow:0 14px 35px rgba(0,0,0,0.15);
+        }
+
+        .value-card .icon{
+            font-size:46px;
+            margin-bottom:18px;
+        }
+
+        .value-card h4{
+            color:#8b4513;
+            font-size:20px;
+            margin-bottom:10px;
+        }
+
+        .value-card p{
+            color:#777;
+            font-size:15px;
+            line-height:1.7;
+        }
+
+        /* ── Meet the Team ── */
+        .team-grid{
+            display:grid;
+            grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+            gap:35px;
+            max-width:1100px;
+            margin:0 auto;
+        }
+
+        .team-card{
+            background:white;
+            border-radius:20px;
+            overflow:hidden;
+            box-shadow:0 5px 18px rgba(0,0,0,0.1);
+            text-align:center;
+            transition:0.35s;
+        }
+
+        .team-card:hover{
+            transform:translateY(-8px);
+            box-shadow:0 14px 35px rgba(0,0,0,0.15);
+        }
+
+        .team-card img{
+            width:100%;
+            height:240px;
+            object-fit:cover;
+            object-position: top center;
+        }
+
+        .team-info{
+            padding:22px 18px;
+        }
+
+        .team-info h4{
+            font-size:19px;
+            color:#d2691e;
+            margin-bottom:5px;
+        }
+
+        .team-info span{
+            font-size:14px;
+            color:#ff69b4;
+            font-weight:600;
+            letter-spacing:0.5px;
+        }
+
+        .team-info p{
+            font-size:14px;
+            color:#777;
+            margin-top:10px;
+            line-height:1.6;
+        }
+
+        /* ── Stats Strip ── */
+        .stats-strip{
+            background: linear-gradient(to right, #8b4513, #d2691e);
+            padding:50px 60px;
+            display:flex;
+            justify-content:space-around;
+            flex-wrap:wrap;
+            gap:30px;
+            text-align:center;
+            color:white;
+        }
+
+        .stat-item h3{
+            font-size:50px;
+            font-weight:700;
+            color:#ffe4b5;
+        }
+
+        .stat-item p{
+            font-size:17px;
+            font-weight:300;
+            margin-top:5px;
+        }
+
+        /* ── CTA Banner ── */
+        .cta-banner{
+            background: linear-gradient(135deg, #ff69b4, #d2691e);
+            padding:60px 40px;
+            text-align:center;
+            color:white;
+        }
+
+        .cta-banner h2{
+            font-size:38px;
+            margin-bottom:15px;
+        }
+
+        .cta-banner p{
+            font-size:18px;
+            margin-bottom:30px;
+            font-weight:300;
+        }
+
+        .cta-banner a{
+            display:inline-block;
+            padding:15px 40px;
+            background:white;
+            color:#d2691e;
+            font-weight:700;
+            font-size:17px;
+            border-radius:30px;
+            text-decoration:none;
+            transition:0.3s;
+        }
+
+        .cta-banner a:hover{
+            background:#ffe4b5;
+            transform:scale(1.05);
+        }
+
+        /* ── Footer ── */
+        footer{
+            background:#8b4513;
+            color:white;
+            text-align:center;
+            padding:20px;
+        }
+
+        /* ── Responsive ── */
+        @media(max-width:768px){
+            .story-grid{
+                grid-template-columns:1fr;
+            }
+            .about-hero-content h2{
+                font-size:36px;
+            }
+            .section{
+                padding:50px 25px;
+            }
+            .values-bg{
+                padding:50px 25px;
+            }
+            .stats-strip{
+                padding:40px 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <h1>🍰 Sweet Cake Shop</h1>
+        <nav>
+            <a href="cakes.html">Home</a>
+            <a href="about.html" class="active">About</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="about-hero" id="about-hero">
+        <div class="about-hero-content">
+            <h2>Our Sweet Story 🍰</h2>
+            <p>Made with passion, baked with love — every cake tells a story.</p>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <div class="section" id="our-story" style="text-align: center;">
+        <h2 class="section-title">Who We Are</h2>
+        <img src="images/image1.jpeg" alt="Sweet Cake Shop Story" style="width: 100%; max-width: 450px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.15);">
+    </div>
+
+    <!-- Core Values -->
+    <div class="values-bg" id="our-values">
+        <div style="max-width:1100px; margin:0 auto;">
+            <h2 class="section-title">What We Stand For</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="icon">🌿</div>
+                    <h4>Fresh Ingredients</h4>
+                    <p>We source only the finest, locally-grown ingredients for every batch we bake.</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon">🎨</div>
+                    <h4>Artistic Design</h4>
+                    <p>Each cake is a canvas — beautifully decorated to match your vision and style.</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon">❤️</div>
+                    <h4>Baked with Love</h4>
+                    <p>Passion drives every step of our process, from mixing to the final garnish.</p>
+                </div>
+                <div class="value-card">
+                    <div class="icon">⚡</div>
+                    <h4>Fast Delivery</h4>
+                    <p>We ensure your cake arrives fresh, on time and in perfect condition — every time.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Stats Strip -->
+    <div class="stats-strip" id="stats">
+        <div class="stat-item">
+            <h3>10K+</h3>
+            <p>Happy Customers</p>
+        </div>
+        <div class="stat-item">
+            <h3>50+</h3>
+            <p>Cake Varieties</p>
+        </div>
+        <div class="stat-item">
+            <h3>15</h3>
+            <p>Years of Baking</p>
+        </div>
+        <div class="stat-item">
+            <h3>100%</h3>
+            <p>Natural Ingredients</p>
+        </div>
+    </div>
+
+
+
+    <!-- CTA Banner -->
+    <div class="cta-banner" id="cta">
+        <h2>Ready to Order Your Dream Cake? 🎂</h2>
+        <p>Browse our delicious flavors and place your order today!</p>
+        <a href="cakes.html">Explore Our Cakes</a>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2026 Sweet Cake Shop | Designed with ❤️</p>
+    </footer>
+
+</body>
+</html>

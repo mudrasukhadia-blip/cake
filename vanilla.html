@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Vanilla flavours Cake Order</title>
+
+<style>
+
+    body{
+        margin:0;
+        padding:0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #f6d365, #fda085);
+        color: white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+    }
+
+    .container{
+        background: rgba(255,255,255,0.15);
+        padding:30px;
+        border-radius:20px;
+        width:400px;
+        box-shadow:0 0 20px rgba(0,0,0,0.4);
+        backdrop-filter: blur(10px);
+    }
+
+    h1{
+        text-align:center;
+        color:#fff8dc;
+        margin-bottom:25px;
+    }
+
+    label{
+        font-size:18px;
+        font-weight:bold;
+    }
+
+    select{
+        width:100%;
+        padding:12px;
+        margin-top:10px;
+        margin-bottom:20px;
+        border:none;
+        border-radius:10px;
+        font-size:16px;
+        background:#fffaf0;
+        color:#6b4f1d;
+    }
+
+    .price-box{
+        background:#fffaf0;
+        color:#6b4f1d;
+        padding:15px;
+        border-radius:10px;
+        text-align:center;
+        font-size:22px;
+        font-weight:bold;
+        margin-bottom:20px;
+    }
+
+    button{
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:10px;
+        background:#fff0b3;
+        color:#6b4f1d;
+        font-size:18px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    button:hover{
+        background:#ffe066;
+        transform:scale(1.03);
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>🍰 Vanilla flavours Cake Order</h1>
+
+    <!-- Flavor Selection -->
+
+    <label>Select Flavor</label>
+
+    <select id="flavor" onchange="updatePrice()">
+
+        <option value="">-- Choose Flavor --</option>
+
+        <option value="White forest">
+            White forest
+        </option>
+
+        <option value="Pineapple">
+            Pineapple
+        </option>
+
+        <option value="Mango">
+            mango
+        </option>
+
+        <option value="Strawberry">
+             Strawberry
+        </option>
+
+        <option value="Orange">
+            Orange
+        </option>
+
+        <option value="Blueberry">
+            Blueberry
+        </option>
+
+        <option value="Butterscotch">
+            Butterscotch 
+        </option>
+
+        <option value="Mix fruits">
+            Mix fruits
+        </option>
+
+    </select>
+
+    <!-- Weight Selection -->
+
+    <label>Select Weight</label>
+
+    <select id="weight" onchange="updatePrice()">
+
+        <option value="">-- Choose Weight --</option>
+
+        <option value="500g">500g</option>
+        <option value="1kg">1kg</option>
+
+    </select>
+
+    <!-- Price Display -->
+
+    <div class="price-box" id="price">
+        Price: ₹0
+    </div>
+
+    <!-- Order Button -->
+
+    <button onclick="orderNow()">
+        Order Now
+    </button>
+
+</div>
+
+<script>
+
+function updatePrice(){
+
+    let flavor =
+    document.getElementById("flavor").value;
+
+    let weight =
+    document.getElementById("weight").value;
+
+    let price = "₹0";
+
+    // White forest
+
+    if(flavor === "White forest"){
+
+        if(weight === "500g") price = "₹400";
+        else if(weight === "1kg") price = "₹600";
+        
+    }
+
+    // Pineapple
+
+    else if(flavor === "Pineapple"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+    }
+
+    // Mango
+
+    else if(flavor === "Mango"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+       
+    }
+
+    // Starwberry
+
+    else if(flavor === "Strawberry"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+    }
+
+    // Orange
+
+    else if(flavor === "Orange"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+    }
+ // Blueberry
+
+    else if(flavor === "Blueberry"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+    }
+ // Butterscotch 
+
+    else if(flavor === "Butterscotch"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+    }
+ // Mix fruits
+
+    else if(flavor === "Mix fruits"){
+
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹550";
+    }
+
+
+
+    document.getElementById("price").innerHTML =
+    "Price: " + price;
+}
+
+function orderNow(){
+
+    let flavor =
+    document.getElementById("flavor").value;
+
+    let weight =
+    document.getElementById("weight").value;
+
+    let price =
+    document.getElementById("price").innerText;
+
+    if(flavor === "" || weight === ""){
+
+        alert("Please select flavor and weight first!");
+    }
+
+    else{
+
+        alert(
+            "🍰 Order Confirmed!\n\n" +
+            "Flavor: " + flavor + "\n" +
+            "Weight: " + weight + "\n" +
+            price
+        );
+        window.location.href = 'checkout.html';
+    }
+}
+
+</script>
+
+</body>
+</html>

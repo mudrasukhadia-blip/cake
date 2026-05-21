@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Chocolate Cake Order</title>
+
+<style>
+    body{
+        margin:0;
+        padding:0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #3e1f0d, #6b3e26);
+        color: white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+    }
+
+    .container{
+        background: rgba(255,255,255,0.1);
+        padding:30px;
+        border-radius:20px;
+        width:400px;
+        box-shadow:0 0 20px rgba(0,0,0,0.4);
+        backdrop-filter: blur(10px);
+    }
+
+    h1{
+        text-align:center;
+        color:#ffd700;
+        margin-bottom:25px;
+    }
+
+    label{
+        font-size:18px;
+        font-weight:bold;
+    }
+
+    select{
+        width:100%;
+        padding:12px;
+        margin-top:10px;
+        margin-bottom:20px;
+        border:none;
+        border-radius:10px;
+        font-size:16px;
+        background:#fff8f0;
+        color:#4b2e2e;
+    }
+
+    .price-box{
+        background:#fff8f0;
+        color:#4b2e2e;
+        padding:15px;
+        border-radius:10px;
+        text-align:center;
+        font-size:22px;
+        font-weight:bold;
+        margin-bottom:20px;
+    }
+
+    button{
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:10px;
+        background:#ffd700;
+        color:#4b2e2e;
+        font-size:18px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    button:hover{
+        background:#ffb700;
+        transform:scale(1.03);
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h1>🍫 Chocolate Cake Order</h1>
+
+    <!-- Flavor Selection -->
+    <label>Select Flavor</label>
+    <select id="flavor" onchange="updatePrice()">
+        <option value="">-- Choose Flavor --</option>
+        <option value="Chocolate cake">Chocolate cake</option>
+        <option value="Choco oreo">Choco oreo</option>
+        <option value="choco kitkat">choco kitkat</option>
+        <option value="Chocolate Truffle">Chocolate Truffle</option>
+        <option value="Black Forest Chocolate">Black Forest Chocolate</option>
+        <option value="Choco moose">Choco moose</option>
+    </select>
+
+    <!-- Weight Selection -->
+    <label>Select Weight</label>
+    <select id="weight" onchange="updatePrice()">
+        <option value="">-- Choose Weight --</option>
+        <option value="500g">500g</option>
+        <option value="1kg">1kg</option>
+    </select>
+
+    <!-- Price Display -->
+    <div class="price-box" id="price">
+        Price: ₹0
+    </div>
+
+    <!-- Order Button -->
+    <button onclick="orderNow()">Order Now</button>
+</div>
+
+<script>
+
+function updatePrice(){
+
+    let flavor = document.getElementById("flavor").value;
+    let weight = document.getElementById("weight").value;
+
+    let price = "₹0";
+
+    // Chocolate cake
+    if(flavor === "Chocolate cake"){
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹650";
+    }
+
+    // Choco oreo
+    else if(flavor === "Choco oreo"){
+        if(weight === "500g") price = "₹380";
+        else if(weight === "1kg") price = "₹700";
+    }
+
+    // choco kitkat
+    else if(flavor === "choco kitkat"){
+        if(weight === "500g") price = "₹380";
+        else if(weight === "1kg") price = "₹700";
+    }
+
+    // Chocolate Truffle
+    else if(flavor === "Chocolate Truffle"){
+        if(weight === "500g") price = "₹550";
+        else if(weight === "1kg") price = "₹950";
+    }
+
+    // Black Forest Chocolate
+    else if(flavor === "Black Forest Chocolate"){
+        if(weight === "500g") price = "₹350";
+        else if(weight === "1kg") price = "₹650";
+    }
+
+    // Choco moose
+    else if(flavor === "Choco moose"){
+        if(weight === "500g") price = "₹380";
+        else if(weight === "1kg") price = "₹700";
+    }
+
+    document.getElementById("price").innerHTML = "Price: " + price;
+}
+
+function orderNow(){
+
+    let flavor = document.getElementById("flavor").value;
+    let weight = document.getElementById("weight").value;
+    let price = document.getElementById("price").innerText;
+
+    if(flavor === "" || weight === ""){
+        alert("Please select flavor and weight first!");
+    }
+    else{
+        alert(
+            "🎂 Order Confirmed!\n\n" +
+            "Flavor: " + flavor + "\n" +
+            "Weight: " + weight + "\n" +
+            price
+        );
+        window.location.href = 'checkout.html';
+    }
+}
+
+</script>
+
+</body>
+</html>

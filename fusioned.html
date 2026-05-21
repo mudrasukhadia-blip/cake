@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Fusioned Cakes</title>
+
+<style>
+
+    body{
+        margin:0;
+        padding:0;
+        font-family: Arial, sans-serif;
+        background: linear-gradient(to right, #1f1f1f, #5c2c2c);
+        color: white;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        height:100vh;
+    }
+
+    .container{
+        background: rgba(255,255,255,0.1);
+        padding:30px;
+        border-radius:20px;
+        width:400px;
+        box-shadow:0 0 20px rgba(0,0,0,0.5);
+        backdrop-filter: blur(10px);
+    }
+
+    h1{
+        text-align:center;
+        color:#ffccd5;
+        margin-bottom:25px;
+    }
+
+    label{
+        font-size:18px;
+        font-weight:bold;
+    }
+
+    select{
+        width:100%;
+        padding:12px;
+        margin-top:10px;
+        margin-bottom:20px;
+        border:none;
+        border-radius:10px;
+        font-size:16px;
+        background:#fff5f5;
+        color:#4b1e1e;
+    }
+
+    .price-box{
+        background:#fff5f5;
+        color:#4b1e1e;
+        padding:15px;
+        border-radius:10px;
+        text-align:center;
+        font-size:22px;
+        font-weight:bold;
+        margin-bottom:20px;
+    }
+
+    button{
+        width:100%;
+        padding:14px;
+        border:none;
+        border-radius:10px;
+        background:#ff4d6d;
+        color:white;
+        font-size:18px;
+        font-weight:bold;
+        cursor:pointer;
+        transition:0.3s;
+    }
+
+    button:hover{
+        background:#e63956;
+        transform:scale(1.03);
+    }
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Fusioned Cakes</h1>
+
+    <!-- Flavor Selection -->
+
+    <label>Select Flavor</label>
+
+    <select id="flavor" onchange="updatePrice()">
+
+        <option value="">-- Choose Flavor --</option>
+
+        <option value="Casata">
+            Casata
+        </option>
+
+        <option value="Gulab jamun">
+            Gulab jamun
+        </option>
+
+        <option value="Rasamalai">
+            Rasamalai
+        </option>
+
+    </select>
+
+    <!-- Weight Selection -->
+
+    <label>Select Weight</label>
+
+    <select id="weight" onchange="updatePrice()">
+
+        <option value="">-- Choose Weight --</option>
+
+        <option value="500g">500g</option>
+        <option value="1kg">1kg</option>
+        
+
+    </select>
+
+    <!-- Price Display -->
+
+    <div class="price-box" id="price">
+        Price: ₹0
+    </div>
+
+    <!-- Order Button -->
+
+    <button onclick="orderNow()">
+        Order Now
+    </button>
+
+</div>
+
+<script>
+
+function updatePrice(){
+
+    let flavor =
+    document.getElementById("flavor").value;
+
+    let weight =
+    document.getElementById("weight").value;
+
+    let price = "₹0";
+
+    // Casata
+
+    if(flavor === "Casata"){
+
+        if(weight === "500g") price = "₹500";
+        else if(weight === "1kg") price = "₹900";
+    }
+
+    // Gulab jamun
+
+    else if(flavor === "Gulab jamun"){
+
+        if(weight === "500g") price = "₹600";
+        else if(weight === "1kg") price = "₹1100";
+    }
+
+    // Rasamalai
+
+    else if(flavor === "Rasamalai"){
+
+        if(weight === "500g") price = "₹600";
+        else if(weight === "1kg") price = "₹1100";
+        }
+
+    document.getElementById("price").innerHTML =
+    "Price: " + price;
+}
+
+function orderNow(){
+
+    let flavor =
+    document.getElementById("flavor").value;
+
+    let weight =
+    document.getElementById("weight").value;
+
+    let price =
+    document.getElementById("price").innerText;
+
+    if(flavor === "" || weight === ""){
+
+        alert("Please select flavor and weight first!");
+    }
+
+    else{
+
+        alert(
+            "🍒 Order Confirmed!\n\n" +
+            "Flavor: " + flavor + "\n" +
+            "Weight: " + weight + "\n" +
+            price
+        );
+        window.location.href = 'checkout.html';
+    }
+}
+
+</script>
+
+</body>
+</html>
