@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contact Us – Sweet Cake Shop</title>
-    <meta name="description" content="Get in touch with Sweet Cake Shop for custom orders, inquiries, or just to say hi!"/>
+    <meta name="description"
+        content="Get in touch with Sweet Cake Shop for custom orders, inquiries, or just to say hi!" />
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        *{
-            margin:0;
-            padding:0;
-            box-sizing:border-box;
-            font-family:'Poppins', sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
         }
 
-        body{
+        body {
             background: linear-gradient(to right, #fff0f5, #ffe4e1);
-            color:#333;
+            color: #333;
         }
 
         /* ── Header ── */
-        header{
+        header {
             position: sticky;
             top: 0;
             z-index: 1000;
             background: rgba(255, 255, 255, 0.85);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            padding:18px 50px;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            box-shadow:0 4px 15px rgba(0,0,0,0.08);
+            padding: 18px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
             border-bottom: 1px solid rgba(255, 105, 180, 0.2);
         }
 
-        header h1{
-            font-size:30px;
-            font-weight:700;
+        header h1 {
+            font-size: 30px;
+            font-weight: 700;
             color: #8b4513;
         }
 
@@ -50,132 +52,140 @@
             align-items: center;
         }
 
-        nav a{
+        nav a {
             color: #555;
-            text-decoration:none;
-            font-size:17px;
+            text-decoration: none;
+            font-size: 17px;
             font-weight: 600;
             padding: 8px 20px;
             border-radius: 25px;
             transition: all 0.3s ease;
         }
 
-        nav a:hover, nav a.active {
+        nav a:hover,
+        nav a.active {
             background: linear-gradient(135deg, #ff69b4, #ff1493);
             color: white;
             box-shadow: 0 4px 12px rgba(255, 105, 180, 0.3);
         }
 
         /* ── Hero Banner ── */
-        .contact-hero{
-            height:45vh;
+        .contact-hero {
+            height: 45vh;
             background: url('https://images.unsplash.com/photo-1519340333755-56e9c1d04579?q=80&w=1400&auto=format&fit=crop') center/cover no-repeat;
-            display:flex;
-            justify-content:center;
-            align-items:center;
-            text-align:center;
-            color:white;
-            position:relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            position: relative;
         }
 
-        .contact-hero::before{
-            content:'';
-            position:absolute;
-            inset:0;
-            background: linear-gradient(to bottom, rgba(139,69,19,0.7), rgba(0,0,0,0.6));
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to bottom, rgba(139, 69, 19, 0.7), rgba(0, 0, 0, 0.6));
         }
 
-        .contact-hero-content{
-            position:relative;
-            z-index:1;
+        .contact-hero-content {
+            position: relative;
+            z-index: 1;
             animation: fadeUp 0.9s ease both;
         }
 
-        .contact-hero-content h2{
-            font-size:52px;
-            font-weight:700;
-            margin-bottom:10px;
+        .contact-hero-content h2 {
+            font-size: 52px;
+            font-weight: 700;
+            margin-bottom: 10px;
         }
 
-        .contact-hero-content p{
-            font-size:20px;
-            font-weight:300;
+        .contact-hero-content p {
+            font-size: 20px;
+            font-weight: 300;
         }
 
-        @keyframes fadeUp{
-            from{ opacity:0; transform:translateY(30px); }
-            to  { opacity:1; transform:translateY(0);    }
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         /* ── Contact Section ── */
-        .contact-container{
-            padding:70px 60px;
-            max-width:1100px;
-            margin:0 auto;
+        .contact-container {
+            padding: 70px 60px;
+            max-width: 1100px;
+            margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1.2fr;
             gap: 50px;
         }
 
         /* Contact Info (Left Side) */
-        .contact-info{
+        .contact-info {
             background: white;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        .contact-info h3{
+        .contact-info h3 {
             font-size: 28px;
             color: #8b4513;
             margin-bottom: 25px;
         }
 
-        .info-item{
+        .info-item {
             display: flex;
             align-items: flex-start;
             gap: 15px;
             margin-bottom: 25px;
         }
 
-        .info-icon{
+        .info-icon {
             font-size: 24px;
             background: linear-gradient(135deg, #ff69b4, #ff1493);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .info-details h4{
+        .info-details h4 {
             font-size: 18px;
             color: #333;
             margin-bottom: 5px;
         }
 
-        .info-details p{
+        .info-details p {
             color: #666;
             font-size: 15px;
             line-height: 1.6;
         }
 
         /* Contact Form (Right Side) */
-        .contact-form-wrapper{
+        .contact-form-wrapper {
             background: white;
             padding: 40px;
             border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        .contact-form-wrapper h3{
+        .contact-form-wrapper h3 {
             font-size: 28px;
             color: #8b4513;
             margin-bottom: 25px;
         }
 
-        .form-group{
+        .form-group {
             margin-bottom: 20px;
         }
 
-        .form-group label{
+        .form-group label {
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
@@ -183,7 +193,7 @@
             font-size: 14px;
         }
 
-        .form-control{
+        .form-control {
             width: 100%;
             padding: 14px 18px;
             border: 2px solid #eee;
@@ -194,19 +204,19 @@
             background: #fafafa;
         }
 
-        .form-control:focus{
+        .form-control:focus {
             outline: none;
             border-color: #ff69b4;
             background: white;
             box-shadow: 0 0 0 4px rgba(255, 105, 180, 0.1);
         }
 
-        textarea.form-control{
+        textarea.form-control {
             resize: vertical;
             min-height: 140px;
         }
 
-        .submit-btn{
+        .submit-btn {
             width: 100%;
             padding: 16px;
             background: linear-gradient(135deg, #8b4513, #d2691e);
@@ -219,39 +229,42 @@
             transition: all 0.3s ease;
         }
 
-        .submit-btn:hover{
+        .submit-btn:hover {
             background: linear-gradient(135deg, #d2691e, #8b4513);
             transform: translateY(-2px);
             box-shadow: 0 8px 20px rgba(139, 69, 19, 0.3);
         }
 
         /* ── Footer ── */
-        footer{
-            background:#8b4513;
-            color:white;
-            text-align:center;
-            padding:20px;
-            margin-top:40px;
+        footer {
+            background: #8b4513;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
         }
 
         /* ── Responsive ── */
-        @media(max-width: 900px){
-            .contact-container{
+        @media(max-width: 900px) {
+            .contact-container {
                 grid-template-columns: 1fr;
             }
         }
-        @media(max-width: 600px){
-            header{
+
+        @media(max-width: 600px) {
+            header {
                 padding: 15px 20px;
                 flex-direction: column;
                 gap: 15px;
             }
-            .contact-container{
+
+            .contact-container {
                 padding: 40px 20px;
             }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Header -->
@@ -274,16 +287,16 @@
 
     <!-- Contact Section -->
     <div class="contact-container">
-        
+
         <!-- Contact Info -->
         <div class="contact-info">
             <h3>Contact Information</h3>
-            
+
             <div class="info-item">
                 <div class="info-icon">📍</div>
                 <div class="info-details">
                     <h4>Our Location</h4>
-                    <p>123 Sweet Tooth Lane,<br>Sugar City, SC 45678</p>
+                    <p>3,Shreenath park society near riddhi siddhi society Alwanaka road manjalpur</p>
                 </div>
             </div>
 
@@ -291,7 +304,7 @@
                 <div class="info-icon">📞</div>
                 <div class="info-details">
                     <h4>Phone Number</h4>
-                    <p>+1 (555) 123-CAKE<br>+1 (555) 987-6543</p>
+                    <p>8780957198-pooja panchal<br>8780048635-nirav panchal</p>
                 </div>
             </div>
 
@@ -299,7 +312,7 @@
                 <div class="info-icon">✉️</div>
                 <div class="info-details">
                     <h4>Email Address</h4>
-                    <p>hello@sweetcakeshop.com<br>orders@sweetcakeshop.com</p>
+                    <p><br>cakesdelicious591@gmail.com</p>
                 </div>
             </div>
 
@@ -307,7 +320,7 @@
                 <div class="info-icon">🕒</div>
                 <div class="info-details">
                     <h4>Opening Hours</h4>
-                    <p>Mon - Fri: 8:00 AM - 8:00 PM<br>Sat - Sun: 9:00 AM - 6:00 PM</p>
+                    <p>Mon - Fri: 9:00 AM - 9:00 PM<br>Sat - Sun: 9:00 AM - 9:00 PM</p>
                 </div>
             </div>
         </div>
@@ -315,8 +328,9 @@
         <!-- Contact Form -->
         <div class="contact-form-wrapper">
             <h3>Send Us a Message</h3>
-            <form action="#" method="POST" onsubmit="event.preventDefault(); alert('Thank you for your message! We will get back to you soon.');">
-                
+            <form action="#" method="POST"
+                onsubmit="event.preventDefault(); alert('Thank you for your message! We will get back to you soon.');">
+
                 <div class="form-group">
                     <label for="name">Your Name</label>
                     <input type="text" id="name" class="form-control" placeholder="John Doe" required>
@@ -334,7 +348,8 @@
 
                 <div class="form-group">
                     <label for="message">Message</label>
-                    <textarea id="message" class="form-control" placeholder="Tell us about your custom cake idea..." required></textarea>
+                    <textarea id="message" class="form-control" placeholder="Tell us about your custom cake idea..."
+                        required></textarea>
                 </div>
 
                 <button type="submit" class="submit-btn">Send Message 🚀</button>
@@ -349,4 +364,5 @@
     </footer>
 
 </body>
+
 </html>
