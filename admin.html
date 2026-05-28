@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Admin Dashboard – Sweet Cake Shop</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        // SECURITY: Redirect if the admin is not logged in
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 260px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #f472b6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(236, 72, 153, 0.15);
+            color: #f472b6;
+            transform: translateX(5px);
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px 50px;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .admin-profile img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        /* ── Metric Cards ── */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .metric-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(244, 114, 182, 0.4);
+        }
+
+        .metric-card h3 {
+            font-size: 16px;
+            color: #94a3b8;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+
+        .metric-card .value {
+            font-size: 36px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .metric-card .trend {
+            font-size: 14px;
+            color: #10b981;
+            margin-top: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ── Tables & Lists ── */
+        .dashboard-sections {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .section-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .section-panel h2 {
+            font-size: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        th {
+            color: #94a3b8;
+            font-weight: 400;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+
+        td {
+            font-size: 15px;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 40px 20px;
+            color: #64748b;
+        }
+
+        /* ── Reviews List ── */
+        .reviews-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .review-item {
+            background: rgba(15, 23, 42, 0.6);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .reviewer-name {
+            font-weight: 600;
+            color: #e2e8f0;
+        }
+
+        .review-stars {
+            color: #fbbf24;
+            font-size: 14px;
+        }
+
+        .review-msg {
+            color: #94a3b8;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* ── Toast Notification ── */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #f472b6, #db2777);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transform: translateX(150%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            z-index: 9999;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        @media(max-width: 1024px) {
+            .dashboard-sections {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>🍰 Admin Panel</h2>
+        <div class="nav-items">
+            <a href="#" class="nav-item active">📊 Dashboard</a>
+            <a href="#" class="nav-item">📦 Orders</a>
+            <a href="#" class="nav-item">⭐ Reviews</a>
+            <a href="cakes.html" class="nav-item" style="margin-top: auto;">🌐 View Store</a>
+            <a href="#" class="nav-item" onclick="logout()" style="color: #f87171;">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>Overview</h1>
+            <div class="admin-profile">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=ec4899&color=fff" alt="Admin">
+                <span>Super Admin</span>
+            </div>
+        </header>
+
+        <!-- Metrics -->
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <h3>Total Orders</h3>
+                <div class="value" id="metric-orders">0</div>
+                <div class="trend">↑ 12% this week</div>
+            </div>
+            <div class="metric-card">
+                <h3>Total Revenue</h3>
+                <div class="value" id="metric-revenue">₹0.00</div>
+                <div class="trend">↑ 8% this week</div>
+            </div>
+            <div class="metric-card">
+                <h3>Average Rating</h3>
+                <div class="value" id="metric-rating">0.0</div>
+                <div class="trend">Based on customer feedback</div>
+            </div>
+        </div>
+
+        <div class="dashboard-sections">
+            <!-- Recent Orders -->
+            <div class="section-panel">
+                <h2>Recent Orders</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Order ID</th>
+                            <th>Customer</th>
+                            <th>Item</th>
+                            <th>Payment</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="orders-table-body">
+                        <!-- Dynamic Content -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Recent Reviews -->
+            <div class="section-panel">
+                <h2>Customer Ratings</h2>
+                <div class="reviews-list" id="reviews-list-container">
+                    <!-- Dynamic Content -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="notification-toast" class="toast">
+        <span style="font-size: 24px;">🔔</span>
+        <div>
+            <h4 style="margin-bottom: 4px; font-size: 16px;">New Order Alert!</h4>
+            <p id="toast-message" style="font-size: 14px; opacity: 0.9;">You have new orders.</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboardData();
+            // Real-time polling every 3 seconds
+            setInterval(loadDashboardData, 3000);
+        });
+
+        function logout() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            window.location.href = 'admin-login.html';
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('notification-toast');
+            document.getElementById('toast-message').innerText = message;
+            toast.classList.add('show');
+            
+            // Play a gentle notification sound (optional)
+            try {
+                const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3');
+                audio.volume = 0.5;
+                audio.play().catch(e => console.log('Audio autoplay prevented'));
+            } catch(e) {}
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 6000); // Hide after 6 seconds
+        }
+
+        function loadDashboardData() {
+            // Load Orders
+            const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            
+            // Calculate Metrics
+            const totalOrders = allOrders.length;
+            
+            // Notification Check
+            const lastViewed = parseInt(localStorage.getItem('lastViewedOrderCount')) || 0;
+            if (totalOrders > lastViewed) {
+                const newOrdersCount = totalOrders - lastViewed;
+                showToast(`Awesome! You have ${newOrdersCount} new order(s) waiting.`);
+                localStorage.setItem('lastViewedOrderCount', totalOrders);
+            }
+
+            let totalRevenue = 0;
+            
+            const ordersTbody = document.getElementById('orders-table-body');
+            
+            if (totalOrders === 0) {
+                ordersTbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders have been placed yet.</td></tr>';
+            } else {
+                ordersTbody.innerHTML = '';
+                allOrders.forEach(order => {
+                    const orderTotal = order.totalPaid || (parseFloat(order.price) + 75); // Fallback if missing
+                    totalRevenue += orderTotal;
+                    
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                        <td style="color: #f472b6;">${order.orderId || '#SWC-XXXX'}</td>
+                        <td>${order.firstName} ${order.lastName}</td>
+                        <td>${order.flavor} Cake (${order.weight})</td>
+                        <td style="font-size: 13px;">${order.paymentMethod || 'N/A'}</td>
+                        <td style="color: #94a3b8;">${new Date(order.date).toLocaleDateString()}</td>
+                        <td style="font-weight: 600;">₹${orderTotal.toFixed(2)}</td>
+                        <td><span class="status-badge">Completed</span></td>
+                    `;
+                    ordersTbody.appendChild(tr);
+                });
+            }
+
+            document.getElementById('metric-orders').innerText = totalOrders;
+            document.getElementById('metric-revenue').innerText = '₹' + totalRevenue.toFixed(2);
+
+            // Load Ratings
+            const allRatings = JSON.parse(localStorage.getItem('allRatings')) || [];
+            const reviewsContainer = document.getElementById('reviews-list-container');
+            
+            if (allRatings.length === 0) {
+                reviewsContainer.innerHTML = '<div class="empty-state">No ratings received yet.</div>';
+            } else {
+                reviewsContainer.innerHTML = '';
+                let sumRatings = 0;
+                
+                allRatings.forEach(review => {
+                    sumRatings += review.rating;
+                    
+                    const stars = '⭐'.repeat(review.rating);
+                    
+                    const div = document.createElement('div');
+                    div.className = 'review-item';
+                    div.innerHTML = `
+                        <div class="review-header">
+                            <span class="reviewer-name">${review.name}</span>
+                            <span class="review-stars">${stars}</span>
+                        </div>
+                        <p class="review-msg">"${review.message}"</p>
+                        <p style="font-size: 11px; color: #64748b; margin-top: 8px;">${review.date}</p>
+                    `;
+                    reviewsContainer.appendChild(div);
+                });
+                
+                const avgRating = (sumRatings / allRatings.length).toFixed(1);
+                document.getElementById('metric-rating').innerText = avgRating + ' / 5.0';
+            }
+        }
+    </script>
+</body>
+</html>

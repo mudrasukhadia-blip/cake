@@ -167,18 +167,19 @@ function orderNow(){
 
     let flavor = document.getElementById("flavor").value;
     let weight = document.getElementById("weight").value;
-    let price = document.getElementById("price").innerText;
+    let priceText = document.getElementById("price").innerText;
 
     if(flavor === "" || weight === ""){
         alert("Please select flavor and weight first!");
     }
     else{
-        alert(
-            "🎂 Order Confirmed!\n\n" +
-            "Flavor: " + flavor + "\n" +
-            "Weight: " + weight + "\n" +
-            price
-        );
+        let numPrice = parseFloat(priceText.replace(/[^0-9.]/g, ''));
+        let orderItem = {
+            flavor: flavor,
+            weight: weight,
+            price: numPrice
+        };
+        localStorage.setItem("currentOrder", JSON.stringify(orderItem));
         window.location.href = 'checkout.html';
     }
 }

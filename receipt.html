@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Receipt – Sweet Cake Shop</title>
+    
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(to right, #fff0f5, #ffe4e1);
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .receipt-container {
+            background: white;
+            max-width: 600px;
+            width: 100%;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            position: relative;
+        }
+
+        /* Decorative top edge */
+        .receipt-container::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: radial-gradient(circle, transparent, transparent 50%, white 50%, white);
+            background-size: 20px 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            border-bottom: 2px dashed #ffe4e1;
+            padding-bottom: 20px;
+        }
+
+        .header h1 {
+            color: #8b4513;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .success-icon {
+            font-size: 50px;
+            color: #2e7d32;
+            margin-bottom: 10px;
+        }
+
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section h3 {
+            font-size: 18px;
+            color: #ff69b4;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 15px;
+            color: #555;
+        }
+
+        .detail-row span:last-child {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px dashed #ffe4e1;
+            font-size: 22px;
+            font-weight: 700;
+            color: #8b4513;
+        }
+
+        .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-top: 40px;
+        }
+
+        .btn {
+            flex: 1;
+            min-width: 150px;
+            padding: 12px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn-whatsapp {
+            background: #25D366;
+            color: white;
+            flex-basis: 100%; /* Make WhatsApp button take full width */
+            padding: 16px;
+            font-size: 18px;
+        }
+
+        .btn-whatsapp:hover {
+            background: #128C7E;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-print {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-print:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-home {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+        }
+
+        .btn-home:hover {
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+        }
+
+        @media print {
+            body {
+                background: white;
+            }
+            .receipt-container {
+                box-shadow: none;
+                margin: 0;
+                padding: 0;
+            }
+            .actions {
+                display: none;
+            }
+            .receipt-container::before {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="receipt-container">
+        <div class="header">
+            <div class="success-icon">✅</div>
+            <h1>Payment Successful!</h1>
+            <p style="color: #777;">Thank you for ordering with Sweet Cake Shop.</p>
+        </div>
+
+        <div class="section">
+            <h3>Order Details</h3>
+            <div class="detail-row">
+                <span>Order ID:</span>
+                <span id="order-id">#SWC-0000</span>
+            </div>
+            <div class="detail-row">
+                <span>Date:</span>
+                <span id="order-date">MM/DD/YYYY</span>
+            </div>
+            <div class="detail-row">
+                <span>Payment Method:</span>
+                <span id="order-payment">UPI</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Customer Info</h3>
+            <div class="detail-row">
+                <span>Name:</span>
+                <span id="cust-name">John Doe</span>
+            </div>
+            <div class="detail-row">
+                <span>Phone:</span>
+                <span id="cust-phone">(555) 123-4567</span>
+            </div>
+            <div class="detail-row">
+                <span>Address:</span>
+                <span id="cust-address" style="text-align: right; max-width: 60%;">123 Street</span>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Order Summary</h3>
+            <div class="detail-row">
+                <span id="item-name">Signature Cake (1 lb)</span>
+                <span id="item-price">₹350.00</span>
+            </div>
+            <div class="detail-row">
+                <span>Shipping</span>
+                <span id="item-shipping">₹50.00</span>
+            </div>
+            <div class="detail-row">
+                <span>Taxes</span>
+                <span id="item-taxes">₹25.00</span>
+            </div>
+            <div class="total-row">
+                <span>Total Paid</span>
+                <span id="item-total">₹425.00</span>
+            </div>
+        </div>
+
+        <div class="actions">
+            <button class="btn btn-whatsapp" onclick="sendWhatsApp()">💬 Send Order Details to Admin via WhatsApp</button>
+            <button class="btn btn-print" onclick="window.print()">🖨️ Print Receipt</button>
+            <a href="cakes.html" class="btn btn-home">Return to Home</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Generate Random Order ID and Date
+            document.getElementById('order-id').innerText = "#SWC-" + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('order-date').innerText = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+
+            // Load Customer Details
+            const custData = localStorage.getItem('customerDetails');
+            if (custData) {
+                const customer = JSON.parse(custData);
+                document.getElementById('cust-name').innerText = customer.firstName + " " + customer.lastName;
+                document.getElementById('cust-phone').innerText = customer.phone;
+                document.getElementById('cust-address').innerText = customer.address + ", " + (customer.area ? customer.area + ", " : "") + customer.city + " - " + customer.zip;
+                document.getElementById('order-payment').innerText = customer.paymentMethod === 'UPI' ? 'UPI (Secure)' : 'Cash on Delivery';
+            }
+
+            // Load Order Details
+            const orderData = localStorage.getItem('currentOrder');
+            const custDataForShipping = localStorage.getItem('customerDetails');
+            
+            if (orderData) {
+                const orderItem = JSON.parse(orderData);
+                const customerData = custDataForShipping ? JSON.parse(custDataForShipping) : {};
+                
+                const price = parseFloat(orderItem.price);
+                const shipping = customerData.shippingCost !== undefined ? parseFloat(customerData.shippingCost) : 50.00;
+                const taxes = 25.00;
+                const total = price + shipping + taxes;
+
+                document.getElementById('item-name').innerText = orderItem.flavor + " Cake (" + orderItem.weight + ")";
+                document.getElementById('item-price').innerText = '₹' + price.toFixed(2);
+                document.getElementById('item-shipping').innerText = '₹' + shipping.toFixed(2);
+                document.getElementById('item-taxes').innerText = '₹' + taxes.toFixed(2);
+                document.getElementById('item-total').innerText = '₹' + total.toFixed(2);
+            }
+        });
+
+        function sendWhatsApp() {
+            const custData = localStorage.getItem('customerDetails');
+            const orderData = localStorage.getItem('currentOrder');
+            
+            if (custData && orderData) {
+                const customer = JSON.parse(custData);
+                const order = JSON.parse(orderData);
+                
+                const orderId = document.getElementById('order-id').innerText;
+                const total = document.getElementById('item-total').innerText;
+                
+                const message = `*New Cake Order!* 🎂\n\n`
+                    + `*Order ID:* ${orderId}\n`
+                    + `*Name:* ${customer.firstName} ${customer.lastName}\n`
+                    + `*Phone:* ${customer.phone}\n`
+                    + `*Cake:* ${order.flavor} Cake (${order.weight})\n`
+                    + `*Total Amount:* ${total}\n`
+                    + `*Payment Method:* ${customer.paymentMethod}\n`
+                    + `*Delivery Address:* ${customer.address}, ${customer.area ? customer.area + ", " : ""}${customer.city} - ${customer.zip}\n\n`
+                    + `Please confirm my order!`;
+
+                const phone = "918780957198"; // Shop Admin Phone Number
+                const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                window.open(url, '_blank');
+            }
+        }
+    </script>
+</body>
+</html>
