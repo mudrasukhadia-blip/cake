@@ -1,0 +1,90 @@
+/* Mobile Navigation and Responsive Adjustments */
+
+/* Hamburger Icon (Hidden on Desktop) */
+.hamburger {
+    display: none;
+    font-size: 28px;
+    cursor: pointer;
+    color: #8b4513;
+    z-index: 1001; /* Ensure it stays above the menu */
+}
+
+/* Mobile Responsive Adjustments */
+@media (max-width: 768px) {
+    /* Show hamburger */
+    .hamburger {
+        display: block;
+    }
+
+    /* Transform Navigation into a Side Drawer */
+    nav#nav-menu {
+        position: fixed;
+        top: 0;
+        right: -100%; /* Hidden off-screen */
+        width: 280px;
+        height: 100vh;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 25px;
+        transition: right 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        z-index: 1000;
+        padding-top: 60px;
+    }
+
+    /* When the menu is open, slide it in */
+    nav#nav-menu.active {
+        right: 0;
+    }
+
+    nav#nav-menu a {
+        font-size: 20px;
+        width: 80%;
+        text-align: center;
+        padding: 12px;
+    }
+
+    /* Reduce Hero Text Sizes */
+    .hero h2, .about-hero-content h2 {
+        font-size: 36px !important;
+        padding: 0 15px;
+    }
+
+    .hero p, .about-hero-content p {
+        font-size: 18px !important;
+        padding: 0 15px;
+    }
+
+    /* Adjust cakes section padding */
+    .cakes {
+        padding: 40px 20px;
+    }
+
+    /* Adjust checkout grid if present */
+    .checkout-container {
+        grid-template-columns: 1fr !important;
+        padding: 0 15px !important;
+    }
+
+    /* Forms */
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+}
+
+/* Extra small devices */
+@media (max-width: 480px) {
+    header {
+        padding: 15px 20px !important;
+    }
+
+    header h1 {
+        font-size: 24px !important;
+    }
+}

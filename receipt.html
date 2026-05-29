@@ -193,6 +193,10 @@
                 <span>Date:</span>
                 <span id="order-date">MM/DD/YYYY</span>
             </div>
+            <div class="detail-row" id="txn-row" style="display: none;">
+                <span>Transaction ID:</span>
+                <span id="transaction-id">N/A</span>
+            </div>
             <div class="detail-row">
                 <span>Payment Method:</span>
                 <span id="order-payment">UPI</span>
@@ -255,7 +259,12 @@
                 document.getElementById('cust-name').innerText = customer.firstName + " " + customer.lastName;
                 document.getElementById('cust-phone').innerText = customer.phone;
                 document.getElementById('cust-address').innerText = customer.address + ", " + (customer.area ? customer.area + ", " : "") + customer.city + " - " + customer.zip;
-                document.getElementById('order-payment').innerText = customer.paymentMethod === 'UPI' ? 'UPI (Secure)' : 'Cash on Delivery';
+                document.getElementById('order-payment').innerText = customer.paymentMethod || 'Razorpay';
+                
+                if (customer.razorpayPaymentId) {
+                    document.getElementById('txn-row').style.display = 'flex';
+                    document.getElementById('transaction-id').innerText = customer.razorpayPaymentId;
+                }
             }
 
             // Load Order Details
