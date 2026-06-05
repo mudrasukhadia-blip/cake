@@ -1,0 +1,16 @@
+{
+  "name": "Cake Crafts",
+  "short_name": "Cake Crafts",
+  "description": "Delicious Cakes For Every Occasion",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#fff0f5",
+  "theme_color": "#ff69b4",
+  "icons": [
+    {
+      "src": "./images/app-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

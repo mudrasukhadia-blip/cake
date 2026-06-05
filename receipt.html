@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Order Receipt – Sweet Cake Shop</title>
+    <title>Order Receipt – Cake Crafts</title>
     
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -173,6 +173,20 @@
             }
         }
     </style>
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('SW registered!', reg);
+                }).catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -180,14 +194,14 @@
         <div class="header">
             <div class="success-icon">✅</div>
             <h1>Payment Successful!</h1>
-            <p style="color: #777;">Thank you for ordering with Sweet Cake Shop.</p>
+            <p style="color: #777;">Thank you for ordering with Cake Crafts.</p>
         </div>
 
         <div class="section">
             <h3>Order Details</h3>
             <div class="detail-row">
                 <span>Order ID:</span>
-                <span id="order-id">#SWC-0000</span>
+                <span id="order-id">#CC-0000</span>
             </div>
             <div class="detail-row">
                 <span>Date:</span>
@@ -249,7 +263,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             // Generate Random Order ID and Date
-            document.getElementById('order-id').innerText = "#SWC-" + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('order-id').innerText = "#CC-" + Math.floor(1000 + Math.random() * 9000);
             document.getElementById('order-date').innerText = new Date().toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 
             // Load Customer Details

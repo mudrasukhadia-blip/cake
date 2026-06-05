@@ -1,0 +1,339 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>All Orders – Admin Panel</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+    <script>
+        // SECURITY: Redirect if the admin is not logged in
+        if (sessionStorage.getItem('isAdminLoggedIn') !== 'true') {
+            window.location.href = 'admin-login.html';
+        }
+    </script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+            display: flex;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            width: 260px;
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(20px);
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            height: 100vh;
+        }
+
+        .sidebar h2 {
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            background: linear-gradient(135deg, #f472b6, #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-items {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .nav-item {
+            padding: 12px 20px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background: rgba(236, 72, 153, 0.15);
+            color: #f472b6;
+            transform: translateX(5px);
+        }
+
+        /* ── Main Content ── */
+        .main-content {
+            flex: 1;
+            margin-left: 260px;
+            padding: 40px 50px;
+            overflow-y: auto;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        header h1 {
+            font-size: 32px;
+            font-weight: 600;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: rgba(30, 41, 59, 0.7);
+            padding: 8px 20px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .admin-profile img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+        }
+
+        /* ── Orders Table ── */
+        .section-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 18px 15px;
+            text-align: left;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        th {
+            color: #94a3b8;
+            font-weight: 600;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            font-size: 15px;
+        }
+        
+        tr:hover {
+            background: rgba(255,255,255,0.02);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            background: rgba(16, 185, 129, 0.2);
+            color: #34d399;
+        }
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #64748b;
+            font-size: 18px;
+        }
+
+        .filter-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .search-bar {
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.2);
+            background: rgba(15, 23, 42, 0.5);
+            color: white;
+            width: 300px;
+            outline: none;
+        }
+
+        .search-bar:focus {
+            border-color: #f472b6;
+        }
+
+    </style>
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('SW registered!', reg);
+                }).catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <h2>🍰 Admin Panel</h2>
+        <div class="nav-items">
+            <a href="admin.html" class="nav-item">📊 Dashboard</a>
+            <a href="admin-orders.html" class="nav-item active">📦 Orders</a>
+            <a href="admin-reviews.html" class="nav-item">⭐ Reviews</a>
+            <a href="index.html" class="nav-item" style="margin-top: auto;">🌐 View Store</a>
+            <a href="#" class="nav-item" onclick="logout()" style="color: #f87171;">🚪 Logout</a>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <header>
+            <h1>All Orders</h1>
+            <div class="admin-profile">
+                <img src="https://ui-avatars.com/api/?name=Admin&background=ec4899&color=fff" alt="Admin">
+                <span>Super Admin</span>
+            </div>
+        </header>
+
+        <div class="section-panel">
+            <div class="filter-controls">
+                <h2 style="font-size: 20px;">Order History</h2>
+                <input type="text" class="search-bar" id="search-input" placeholder="Search orders by ID or customer name..." onkeyup="filterOrders()">
+            </div>
+            
+            <table>
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer Name</th>
+                        <th>Item Details</th>
+                        <th>Payment Method</th>
+                        <th>Date & Time</th>
+                        <th>Amount Paid</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-table-body">
+                    <!-- Dynamic Content -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let allOrders = [];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadOrdersData();
+            setInterval(loadOrdersData, 5000); // Poll for new orders
+        });
+
+        function logout() {
+            sessionStorage.removeItem('isAdminLoggedIn');
+            window.location.href = 'admin-login.html';
+        }
+
+        async function loadOrdersData() {
+            try {
+                const response = await fetch('http://localhost:5000/api/orders');
+                if (response.ok) {
+                    allOrders = await response.json();
+                } else {
+                    allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+                }
+            } catch (error) {
+                console.error("Backend not running, falling back to localStorage", error);
+                allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            }
+            renderOrders(allOrders);
+        }
+
+        function renderOrders(ordersToRender) {
+            const ordersTbody = document.getElementById('orders-table-body');
+            
+            if (ordersToRender.length === 0) {
+                ordersTbody.innerHTML = '<tr><td colspan="7" class="empty-state">No orders found.</td></tr>';
+                return;
+            }
+
+            ordersTbody.innerHTML = '';
+            
+            ordersToRender.forEach(order => {
+                const orderTotal = order.totalPaid || (parseFloat(order.price) + 75);
+                const orderTime = new Date(order.date).toLocaleString();
+                
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td style="color: #f472b6; font-weight: 600;">${order.orderId || '#SWC-XXXX'}</td>
+                    <td>
+                        <div style="font-weight: 600;">${order.firstName} ${order.lastName}</div>
+                        <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">${order.email || 'No email provided'}</div>
+                        <div style="font-size: 13px; color: #94a3b8;">${order.address || 'No address'}</div>
+                    </td>
+                    <td>
+                        <div style="font-weight: 600;">${order.flavor} Cake</div>
+                        <div style="font-size: 13px; color: #94a3b8; margin-top: 4px;">Weight: ${order.weight}</div>
+                        <div style="font-size: 13px; color: #94a3b8;">Base Price: ₹${order.price}</div>
+                    </td>
+                    <td>
+                        <span style="background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 6px; font-size: 13px;">
+                            ${order.paymentMethod || 'Razorpay'}
+                        </span>
+                    </td>
+                    <td style="color: #cbd5e1; font-size: 14px;">${orderTime}</td>
+                    <td style="font-weight: 700; color: #fff;">₹${orderTotal.toFixed(2)}</td>
+                    <td><span class="status-badge">Completed</span></td>
+                `;
+                ordersTbody.appendChild(tr);
+            });
+        }
+
+        function filterOrders() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            
+            const filtered = allOrders.filter(order => {
+                const fullName = `${order.firstName} ${order.lastName}`.toLowerCase();
+                const id = (order.orderId || '').toLowerCase();
+                return fullName.includes(searchTerm) || id.includes(searchTerm);
+            });
+            
+            renderOrders(filtered);
+        }
+    </script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Admin Dashboard – Sweet Cake Shop</title>
+    <title>Admin Dashboard – Cake Crafts</title>
 
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
@@ -281,6 +281,20 @@
             }
         }
     </style>
+    <!-- PWA Settings -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ff69b4">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').then(reg => {
+                    console.log('SW registered!', reg);
+                }).catch(err => console.log('SW failed', err));
+            });
+        }
+    </script>
 </head>
 <body>
 
@@ -288,9 +302,9 @@
     <div class="sidebar">
         <h2>🍰 Admin Panel</h2>
         <div class="nav-items">
-            <a href="#" class="nav-item active">📊 Dashboard</a>
-            <a href="#" class="nav-item">📦 Orders</a>
-            <a href="#" class="nav-item">⭐ Reviews</a>
+            <a href="admin.html" class="nav-item active">📊 Dashboard</a>
+            <a href="admin-orders.html" class="nav-item">📦 Orders</a>
+            <a href="admin-reviews.html" class="nav-item">⭐ Reviews</a>
             <a href="index.html" class="nav-item" style="margin-top: auto;">🌐 View Store</a>
             <a href="#" class="nav-item" onclick="logout()" style="color: #f87171;">🚪 Logout</a>
         </div>
@@ -327,7 +341,7 @@
 
         <div class="dashboard-sections">
             <!-- Recent Orders -->
-            <div class="section-panel">
+            <div class="section-panel" id="orders-section">
                 <h2>Recent Orders</h2>
                 <table>
                     <thead>
@@ -348,7 +362,7 @@
             </div>
 
             <!-- Recent Reviews -->
-            <div class="section-panel">
+            <div class="section-panel" id="reviews-section">
                 <h2>Customer Ratings</h2>
                 <div class="reviews-list" id="reviews-list-container">
                     <!-- Dynamic Content -->
@@ -395,9 +409,16 @@
             }, 6000); // Hide after 6 seconds
         }
 
-        function loadDashboardData() {
-            // Load Orders
-            const allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+        async function loadDashboardData() {
+            // Fetch Orders
+            let allOrders = [];
+            try {
+                const response = await fetch('http://localhost:5000/api/orders');
+                if (response.ok) allOrders = await response.json();
+                else allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            } catch(e) {
+                allOrders = JSON.parse(localStorage.getItem('allOrders')) || [];
+            }
             
             // Calculate Metrics
             const totalOrders = allOrders.length;
@@ -415,7 +436,7 @@
             const ordersTbody = document.getElementById('orders-table-body');
             
             if (totalOrders === 0) {
-                ordersTbody.innerHTML = '<tr><td colspan="6" class="empty-state">No orders have been placed yet.</td></tr>';
+                ordersTbody.innerHTML = '<tr><td colspan="7" class="empty-state">No orders have been placed yet.</td></tr>';
             } else {
                 ordersTbody.innerHTML = '';
                 allOrders.forEach(order => {
@@ -424,7 +445,7 @@
                     
                     const tr = document.createElement('tr');
                     tr.innerHTML = `
-                        <td style="color: #f472b6;">${order.orderId || '#SWC-XXXX'}</td>
+                        <td style="color: #f472b6;">${order.orderId || '#CC-XXXX'}</td>
                         <td>${order.firstName} ${order.lastName}</td>
                         <td>${order.flavor} Cake (${order.weight})</td>
                         <td style="font-size: 13px;">${order.paymentMethod || 'N/A'}</td>
@@ -439,8 +460,16 @@
             document.getElementById('metric-orders').innerText = totalOrders;
             document.getElementById('metric-revenue').innerText = '₹' + totalRevenue.toFixed(2);
 
-            // Load Ratings
-            const allRatings = JSON.parse(localStorage.getItem('allRatings')) || [];
+            // Fetch Ratings
+            let allRatings = [];
+            try {
+                const res = await fetch('http://localhost:5000/api/reviews');
+                if (res.ok) allRatings = await res.json();
+                else allRatings = JSON.parse(localStorage.getItem('allRatings')) || [];
+            } catch(e) {
+                allRatings = JSON.parse(localStorage.getItem('allRatings')) || [];
+            }
+
             const reviewsContainer = document.getElementById('reviews-list-container');
             
             if (allRatings.length === 0) {
